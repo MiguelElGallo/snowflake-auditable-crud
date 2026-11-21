@@ -1,18 +1,18 @@
-# Raise a staging feature rollout from 25% to 50%
+# Test and approve a change to a Snowflake configuration table
 
-The checkout team wants more staging traffic to use `new_checkout`. You and a reviewer will change one configuration row, preview its old and new values, and follow the change into the audit trail.
+A fictional store is testing a new checkout page. One setting in its Snowflake configuration table controls what percentage of testers see the page. You'll change that value from 25% to 50% on a copy of the table, called a *clone*. A reviewer will check which row changed, approve the update, and apply it to the original table.
 
-Use a disposable development installation with the [sample tables](../../bootstrap/10_seed_demo.sql) populated. You need the Developer app. Your reviewer needs the Admin app under a different Snowflake user. On a freshly seeded table, `new_checkout` is enabled at `25` percent in each of `dev`, `staging` and `prod`.
+Use a disposable development installation with the sample tables populated. You need the Developer app. Your reviewer needs the Admin app under a different Snowflake user. [Sample data](../../bootstrap/10_seed_demo.sql)
 
 ## 1. Open a request
 
 In the Developer app, open **Choose table**. On the **FEATURE_FLAGS** card, select **Propose a change**. The **Change workbench** opens. Copy the request ID so your reviewer can find the same request later.
 
-Expand **Show schema and sample of AUDITABLE_CRUD.DEMO.FEATURE_FLAGS**. Find the row for `new_checkout` in `staging`. Its `ROLLOUT_PCT` should be `25`. If this installation already has a different value, use a fresh copy of the demo for this lesson.
+Expand **Show schema and sample of AUDITABLE_CRUD.DEMO.FEATURE_FLAGS**. Find the row where `FLAG_KEY` is `new_checkout` (the new page) and `ENVIRONMENT` is `staging` (the test environment). The `ROLLOUT_PCT` column holds the percentage of testers who see the page. It starts at `25` in the sample data. If your row already has a different value, use a fresh copy of the demo for this lesson.
 
 ## 2. Preview one row
 
-Select **Write SQL** and enter this statement in the DML editor.
+Select **Write SQL** and enter this update. The `WHERE` clause selects the setting in the test environment and checks that its current value is still `25`.
 
 ```sql
 UPDATE FEATURE_FLAGS
@@ -22,7 +22,7 @@ WHERE FLAG_KEY = 'new_checkout'
   AND ROLLOUT_PCT = 25;
 ```
 
-Select **Dry run on the clone**. Under **Dry-run result**, open **Updated (1)** and inspect the row.
+Select **Dry run on the clone** to test the update on the copy. Under **Dry-run result**, open **Updated (1)** and compare the old and new values.
 
 | Flag | Environment | Changed column | Before | After |
 | --- | --- | --- | ---: | ---: |
@@ -32,15 +32,15 @@ The counters should show one update, zero inserts and zero deletes. The source t
 
 ## 3. Hand the change to your reviewer
 
-Enter `Raise the staging checkout rollout to 50%` in **Note for the reviewer (optional)** and select **Submit for approval**. You can track the request under **My requests**.
+Enter `Show the new checkout page to 50% of testers` in **Note for the reviewer (optional)** and select **Submit for approval**. You can track the request under **My requests**.
 
-Have your reviewer open **Review queue** in the Admin app and select the row matching your request ID. On **Review request**, they can read your note and the SQL. Under **Change set**, check that only the staging rollout changes. Select **Drift since dry run** to check for intervening changes. If any appear, select **Re-validate on current data** and inspect **Change set → Admin re-validation (current data)**. Continue only if the result still matches the row above.
+Have your reviewer open **Review queue** in the Admin app and select your request ID. On **Review request**, they can read your note and the SQL. Under **Change set**, check that only the percentage for `new_checkout` in the test environment changes. Select **Drift since dry run** to see whether the data has changed since your preview. If it has, select **Re-validate on current data** and inspect **Change set → Admin re-validation (current data)**. Continue only if the result still matches the row above.
 
-Have the reviewer enter `Confirmed one staging rollout changes from 25 to 50` in **Comment (required)**, leave the allowed deviation at `0`, and select **Approve**. The request is now **Approved**. The staging value is still `25`.
+Have the reviewer enter `Confirmed that only the test setting changes, from 25% to 50%` in **Comment (required)**, leave the allowed deviation at `0`, and select **Approve**. The request now shows **Approved**. At this point, the value in the original table is still `25`.
 
 ## 4. Execute and read the record
 
-In the Admin app, select **Execute on AUDITABLE_CRUD.DEMO.FEATURE_FLAGS**, check the target and expected count, and confirm **Yes, execute now**. This action writes the staging value `50` to the source table.
+In the Admin app, select **Execute on AUDITABLE_CRUD.DEMO.FEATURE_FLAGS**, check the table name and the expected count of one update, and confirm **Yes, execute now**. This is the step that writes `50` to the test setting in the original table.
 
 Open **History and audit**, select the same request and inspect **Audit trail**. Look for the requester on `SUBMITTED`, the reviewer on `APPROVED` and the executor on `EXECUTED`. The **Execution** row in the stage table shows one update and its Snowflake query ID.
 
@@ -48,4 +48,4 @@ In this example from the local demo, the stage table shows one updated row at ex
 
 ![Admin History and audit showing one executed update and separate requester and reviewer events](../media/tutorial-audit.png)
 
-To repeat the lesson in this installation, open a new request to set the same staging row back to `25`. Change the final predicate to `ROLLOUT_PCT = 50` and preview, review and execute that one-row change. The original request remains in the audit trail.
+To repeat the lesson, open a new request for the same test setting. Use `SET ROLLOUT_PCT = 25` and change the last condition to `AND ROLLOUT_PCT = 50`. Preview, review, and execute the reset. The audit trail records both requests.

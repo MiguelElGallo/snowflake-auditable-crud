@@ -52,4 +52,4 @@ Submission requires the same SQL as the latest completed dry run and between one
 | SQL reporting | `CORE.V_REQUESTS` exposes status, actors and stage totals. `CORE.V_AUDIT` exposes timestamped events, actors and details. `AC_ADMIN` has read access to both views. |
 | Evidence after sandbox cleanup | The row-level change set is removed. The request, counts and audit events remain. |
 
-See [why a request can return to review](../explanation/approval-and-drift.md) or [try the staging rollout](../tutorials/first-change.md).
+To see how these steps fit together, test and approve a sample configuration change or follow a request that needs another review. [Configuration table tutorial](../tutorials/first-change.md) · [Why a request can return to review](../explanation/approval-and-drift.md)

@@ -69,4 +69,4 @@ snow streamlit get-url AUDITABLE_CRUD.APPS.DEVELOPER_APP -c "$AC_SNOWFLAKE_CONNE
 snow streamlit get-url AUDITABLE_CRUD.APPS.ADMIN_APP -c "$AC_SNOWFLAKE_CONNECTION" --role AC_OWNER
 ```
 
-Open the first link as a developer and the second as a reviewer. **Choose table** lists the managed tables. **Review queue** shows requests ready for review. Each page shows the signed-in viewer. Open **Runtime details** to see the installed Streamlit and Pillow versions. If packages fail to load, check the `artifact_repositories` column from the attachment script and the owner’s repository access. [Try the checkout rollout](../tutorials/first-change.md)
+Open the first link as a developer and the second as a reviewer. **Choose table** lists the managed tables. **Review queue** shows requests ready for review. Each page shows the signed-in viewer. Open **Runtime details** to see the installed Streamlit and Pillow versions. If packages fail to load, check the `artifact_repositories` column from the attachment script and the owner’s repository access. [Test and approve a configuration change](../tutorials/first-change.md)
