@@ -1,67 +1,77 @@
 1
-00:00:00,290 --> 00:00:05,047
-A checkout feature flag in Snowflake
-is set to 25% in staging.
+00:00:00,290 --> 00:00:02,893
+Your app stores its settings
+in a Snowflake table.
 
 2
-00:00:05,112 --> 00:00:06,755
-What would change at 50%?
+00:00:02,958 --> 00:00:06,115
+Test each change on a copy of the table,
+called a clone.
 
 3
-00:00:07,570 --> 00:00:09,149
-Start in the Developer app.
+00:00:06,180 --> 00:00:09,081
+Have someone else approve it
+before you update the original.
 
 4
-00:00:09,214 --> 00:00:11,024
-Target new_checkout in staging.
+00:00:09,930 --> 00:00:13,535
+In this demo, a fictional store
+is testing a new checkout page.
 
 5
-00:00:11,089 --> 00:00:14,225
-The update requires the current
-value to be 25.
+00:00:13,600 --> 00:00:16,608
+Today, 25% of testers see that page.
 
 6
-00:00:15,050 --> 00:00:16,535
-Run the update on a clone.
+00:00:16,673 --> 00:00:20,300
+In the Developer app, propose changing
+that setting to 50%.
 
 7
-00:00:16,600 --> 00:00:18,883
-One row goes from 25 to 50.
+00:00:21,130 --> 00:00:22,639
+Run the update on the clone.
 
 8
-00:00:18,948 --> 00:00:20,633
-The source stays at 25.
+00:00:22,704 --> 00:00:27,184
+The preview shows one row changing
+from 25% to 50%.
 
 9
-00:00:21,450 --> 00:00:23,518
-Send the request to a different reviewer.
+00:00:27,249 --> 00:00:30,257
+The original table still reads 25%.
 
 10
-00:00:23,583 --> 00:00:25,910
-They revalidate the change on current data,
+00:00:31,090 --> 00:00:32,669
+Send the preview to a reviewer.
 
 11
-00:00:25,975 --> 00:00:27,610
-add a comment, and approve it.
+00:00:32,734 --> 00:00:35,998
+In the Admin app, they test the change
+again on current data.
 
 12
-00:00:28,450 --> 00:00:30,434
-Approval leaves the source untouched.
+00:00:36,063 --> 00:00:38,000
+They check the result and approve it.
 
 13
-00:00:30,499 --> 00:00:32,398
-The reviewer confirms execution.
+00:00:38,850 --> 00:00:40,537
+The reviewer selects Execute.
 
 14
-00:00:32,463 --> 00:00:34,916
-Now the staging flag reads 50%.
+00:00:40,602 --> 00:00:43,354
+They check the table name
+and confirm the update.
 
 15
-00:00:35,770 --> 00:00:38,863
-The history shows who requested
-and approved the change.
+00:00:43,419 --> 00:00:46,192
+The original table now reads 50%.
 
 16
-00:00:38,928 --> 00:00:42,683
-The execution query ID links the
-decision to the update.
+00:00:47,010 --> 00:00:50,679
+The audit log shows who requested the change
+and who approved it.
+
+17
+00:00:50,744 --> 00:00:54,286
+Use the query ID to look up
+the exact update that ran.

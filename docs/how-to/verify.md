@@ -28,7 +28,7 @@ Isolated mode creates a fresh transient schema, installs the candidate handlers 
 AC_ISOLATED_TESTS=1 AC_SNOWFLAKE_CONNECTION=my_dev_connection uv run --frozen pytest -m snowflake
 ```
 
-The live assertions cover actual target rows, review after a lookup or column definition changes, successful commits, failures, cleanup and mixed `MERGE` results. The service connection supplies two test actor labels. To check sign-in, open the hosted Developer and Admin apps as two distinct Snowflake users and complete the [first change](../tutorials/first-change.md).
+The live assertions cover actual target rows, review after a lookup or column definition changes, successful commits, failures, cleanup and mixed `MERGE` results. The service connection supplies two test actor labels. To check sign-in, open the hosted Developer and Admin apps as two distinct Snowflake users and work through the sample configuration change. [Configuration table tutorial](../tutorials/first-change.md)
 
 To test **already-deployed procedures**, omit `AC_ISOLATED_TESTS`. That mode writes uniquely named pricing and lookup rows in the deployed demo tables, then removes the fixtures. It retains test request IDs in the audit log. Open requests reading those tables can see the activity as drift.
 

@@ -4,7 +4,9 @@ You can help by reporting a bug, improving a guide or changing how the Snowflake
 
 ## Report a bug
 
-In the repository’s **Issues** tab, look for an existing report. If you open a new issue, include the app page or command, the smallest steps that reproduce the problem, and what you expected and observed. For a suspected vulnerability, follow the [private reporting instructions](SECURITY.md). A one-row example from the [staging rollout tutorial](docs/tutorials/first-change.md) is a useful starting point.
+In the repository’s **Issues** tab, look for an existing report. If you open a new issue, include the app page or command, the smallest steps that reproduce the problem, and what you expected and observed. The configuration table tutorial shows how to describe a change to one row. [Configuration table tutorial](docs/tutorials/first-change.md)
+
+For a suspected vulnerability, use the project’s private reporting channel. [Private reporting instructions](SECURITY.md)
 
 Use synthetic rows, SQL and usernames. In public issues, pull requests and screenshots, omit credentials, account identifiers, query IDs and customer data. Keep your deployment’s `manifest.yml`, connection settings and `.streamlit/secrets.toml` local.
 

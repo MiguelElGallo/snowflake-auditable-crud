@@ -1,10 +1,10 @@
 # Snow Auditable CRUD
 
-Preview a change to a Snowflake table, have someone else review it, and keep a record of the SQL that ran. Use it for changes such as raising a checkout rollout in staging or correcting a regional price.
+You keep your application settings in a Snowflake configuration table. Before updating a setting, you want to test the change on a copy of the table (a *clone*) and have someone else approve it.
 
-The **Developer app** runs the proposed SQL on an isolated working copy of the table, called a clone. The **Admin app** shows the affected rows so a second person can review them. Approval and execution are separate actions. When the reviewer executes the change, the workflow checks the approval, writes to the source table and records the result.
+In this demo, a fictional store is testing a new checkout page. One setting controls how many testers see it. In the **Developer app**, you change that setting on the clone from one in four testers (25%) to one in two (50%).
 
-**Try a first change.** Increase the checkout rollout from 25% to 50% in staging. You’ll see one row change on the clone and follow the request through to its audit record. [Follow the tutorial](docs/tutorials/first-change.md) · [Watch the 44-second demo](docs/media/snowflake-feature-flag.mp4) · [English captions](docs/media/snowflake-feature-flag.en_US.srt)
+In the **Admin app**, a reviewer compares the old and new values and approves the change. When the reviewer applies it, the original table gets the new value. The audit log shows who requested the change, who approved it, and which SQL statement ran. [Follow the tutorial](docs/tutorials/first-change.md) · [Watch the demo](docs/media/snowflake-feature-flag.mp4) · [English captions](docs/media/snowflake-feature-flag.en_US.srt)
 
 ## Find what you need
 

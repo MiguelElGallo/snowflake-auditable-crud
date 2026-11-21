@@ -21,4 +21,4 @@ The live suite also exercises empty and populated managed-table views and a sche
 
 ## Documentation example
 
-The staging rollout in the [first-change tutorial](tutorials/first-change.md) was exercised using the project handlers and seed SQL in an isolated Snowflake schema. The preview recorded one update from 25 to 50. The source still read 25 after approval. Execution changed only staging, and the separate reset request restored it to 25. The test also checked the actors, query ID and unchanged development and production rows. [Run the project checks](how-to/verify.md)
+The tutorial’s configuration change was tested with the project handlers and sample data in an isolated Snowflake schema. The preview recorded one row changing from 25 to 50 on the clone. After approval, the original table still read 25. Execution changed only the row for the test environment, and a separate reset request restored it to 25. The test also checked the actors, query ID, and values in the development and production rows. [Configuration table tutorial](tutorials/first-change.md) · [Run the project checks](how-to/verify.md)
