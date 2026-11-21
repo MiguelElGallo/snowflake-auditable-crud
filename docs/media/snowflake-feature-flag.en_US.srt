@@ -1,0 +1,67 @@
+1
+00:00:00,290 --> 00:00:05,047
+A checkout feature flag in Snowflake
+is set to 25% in staging.
+
+2
+00:00:05,112 --> 00:00:06,755
+What would change at 50%?
+
+3
+00:00:07,570 --> 00:00:09,149
+Start in the Developer app.
+
+4
+00:00:09,214 --> 00:00:11,024
+Target new_checkout in staging.
+
+5
+00:00:11,089 --> 00:00:14,225
+The update requires the current
+value to be 25.
+
+6
+00:00:15,050 --> 00:00:16,535
+Run the update on a clone.
+
+7
+00:00:16,600 --> 00:00:18,883
+One row goes from 25 to 50.
+
+8
+00:00:18,948 --> 00:00:20,633
+The source stays at 25.
+
+9
+00:00:21,450 --> 00:00:23,518
+Send the request to a different reviewer.
+
+10
+00:00:23,583 --> 00:00:25,910
+They revalidate the change on current data,
+
+11
+00:00:25,975 --> 00:00:27,610
+add a comment, and approve it.
+
+12
+00:00:28,450 --> 00:00:30,434
+Approval leaves the source untouched.
+
+13
+00:00:30,499 --> 00:00:32,398
+The reviewer confirms execution.
+
+14
+00:00:32,463 --> 00:00:34,916
+Now the staging flag reads 50%.
+
+15
+00:00:35,770 --> 00:00:38,863
+The history shows who requested
+and approved the change.
+
+16
+00:00:38,928 --> 00:00:42,683
+The execution query ID links the
+decision to the update.

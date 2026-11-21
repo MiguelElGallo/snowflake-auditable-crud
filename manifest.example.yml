@@ -1,0 +1,60 @@
+# Copy this file to manifest.yml and replace the account identifier and both role lists.
+manifest_version: 2
+type: DCM_PROJECT
+default_target: 'DEV'
+
+targets:
+  DEV:
+    account_identifier: YOUR_ORG-YOUR_ACCOUNT
+    project_name: 'AUDITABLE_CRUD.DCM.AUDITABLE_CRUD_PROJECT'
+    project_owner: AC_OWNER
+    templating_config: 'DEV'
+
+templating:
+  defaults:
+    # Database that holds CORE (workflow state and APIs), SANDBOX (clones),
+    # APPS (Streamlit) and DEMO (sample managed tables). Created by bootstrap/.
+    app_db: 'AUDITABLE_CRUD'
+    warehouse: 'COMPUTE_WH'
+    compute_pool: 'SYSTEM_COMPUTE_POOL_CPU'
+    cleanup_retention_days: 7
+    # 0 preserves idle drafts. A positive value expires untouched editable requests.
+    cleanup_idle_draft_days: 0
+    # Account roles that receive the app database roles.
+    developer_account_roles: []
+    admin_account_roles: []
+    # Tables users may change through the apps. clone_database/clone_schema say
+    # where the per-request clones live (default: <app_db>.SANDBOX).
+    # Tables outside app_db must be onboarded first: bootstrap/20_onboard_existing_table.sql
+    managed_tables:
+      - table_id: 'PRICING_CONFIG'
+        source_database: 'AUDITABLE_CRUD'
+        source_schema: 'DEMO'
+        source_table: 'PRICING_CONFIG'
+        key_columns: 'SKU,REGION'
+        allowed_read_tables: 'AUDITABLE_CRUD.DEMO.REGIONS'
+        max_affected_rows: 1000
+        description: 'Per-region list prices used by the pricing service'
+      - table_id: 'FEATURE_FLAGS'
+        source_database: 'AUDITABLE_CRUD'
+        source_schema: 'DEMO'
+        source_table: 'FEATURE_FLAGS'
+        key_columns: 'FLAG_KEY,ENVIRONMENT'
+        max_affected_rows: 200
+        description: 'Feature flags and rollout percentages per environment'
+  configurations:
+    DEV:
+      developer_account_roles: ['YOUR_DEVELOPER_ROLE']
+      admin_account_roles: ['YOUR_REVIEWER_ROLE']
+
+assets:
+  developer_app:
+    paths:
+      - 'streamlit/developer_app/**/*.py'
+      - 'streamlit/common/requirements.txt'
+      - 'streamlit/common/**/*.py'
+  admin_app:
+    paths:
+      - 'streamlit/admin_app/**/*.py'
+      - 'streamlit/common/requirements.txt'
+      - 'streamlit/common/**/*.py'
